@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+	<title>auto complete</title>
+	<script type="text/javascript" src="libs/angular.min.js"></script>
+	<script type="text/javascript" src="libs/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="script.js"></script>
+</head>
+<body ng-controller="ctrl">
+<input
+  autocomplete
+  type="text"
+  
+  localItems ="persons"
+  remoteItem ="http://localhost/autoComplete/customers.php"
+  multiple ="true"
+ >
+</body>
+</html>
