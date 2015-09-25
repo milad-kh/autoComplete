@@ -5,43 +5,48 @@
 	init = function(){
 		ng
 		.module('app', [])
-		.directive('autocomplete', ['$http', autocompleteFunction])
+		.directive('autocomplete', ['$http', '$compile', autocompleteFunction])
 		.controller('ctrl', ctrlFunction)
 	},
 	
 	ctrlFunction = function($scope)
 	{	
-		$scope.persons = [
-			{
-				name: 'milad',
-				family: 'khanmohammadi'
-			},
-			{
-				name: 'ali',
-				family: 'bakhtiari'
-			},
-			{
-				name: 'reza',
-				family: 'shakeri'
-			}
-		]
+		$scope.persons = 'meghdar';
 	},
 
-	autocompleteFunction = function($http)
+	autocompleteFunction = function($http, $compile)
 	{
 		return {
 			restrict : 'A',
-			scope: true, // a child scope inherits from the parents
-			templateUrl: 'simpleList.html',
+			scope: {
+				dataType: '=localItems'
+			},
 			link: function(scope, elem, attrs)
 			{
-				elem.bind('keyup', function(){
-					$http
-						.get("customers.php?searchKey=" + this.value)
-						.success(function(response){
-							console.log(response);
-						})
-				})
+				console.log(scope);
+				console.log(attrs);
+				var 
+				imageTemplate = '<div>image</div>',
+				videoTemplate = '<div>video</div>',
+				template = '',
+				templateChooser = function(type)
+				{
+					switch (type)
+					{
+						case 'image':
+							template = imageTemplate;
+							break;
+						case 'video':
+							template = videoTemplate;
+							break;
+					}
+						return template;		
+				},
+
+				elementParent = $("<div class=ac ></div>");
+				var t = templateChooser('image');
+				elementParent.append(templateChooser('image'));
+				$("body").append(elementParent);
 			}
 		}
 	}
